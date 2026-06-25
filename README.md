@@ -1,23 +1,41 @@
-LAAuthentication, playing with LocalAuthentication. 
+# LocalAuthentication Swift Wrapper
 
-LA handle touchID and FaceID
+iOS framework and demo app that wrap Apple's `LocalAuthentication` APIs behind a small reusable interface.
 
-I created a framework with a method `evaluatePolicy`. You can use to test it. 
+The project demonstrates biometric authentication flows for Face ID, Touch ID, passcode fallback, success handling, rejection, and unavailable-biometry states.
 
-```Swift
+## What This Project Shows
 
-LAuthentication.shared.evaluatePolicy(reason: "Ajam!! Pium pium") { (success) in
-    if(success){
-        self.showAlert(title: "Success" , message: "You can look some secrets properties")
-    }else{
-        self.showAlert(title: "Authentication failed" , message: "You could not be verified; please try again.")
+- `LAuthentication` framework target.
+- `LAuthentication.shared.evaluatePolicy` wrapper method.
+- Demo UIKit app under `DemoLA`.
+- Separation between authentication API access and screen-level alert handling.
+
+## Usage
+
+```swift
+LAuthentication.shared.evaluatePolicy(reason: "Authenticate to continue") { success in
+    if success {
+        // Unlock protected flow.
+    } else {
+        // Authentication failed.
     }
-} rejected: { (error) in
-    self.showAlert(title: "Biometry unavailable" , message: "Your device is not configured for biometric authentication.")
+} rejected: { error in
+    // Biometry unavailable, not enrolled, locked out, or cancelled.
 }
-
 ```
 
-Enjoy!
-Dambert Munoz,
-Software Engineer 
+## Running
+
+```sh
+open LAuthentication.xcodeproj
+```
+
+Run the demo app on a physical device for full biometric coverage. Simulator behavior is limited.
+
+## Technical Notes
+
+- Always provide a user-facing authentication reason.
+- Handle unavailable biometry separately from failed authentication.
+- Do not treat biometric success as authorization by itself; pair it with the app's real session/security model.
+- Prefer dependency injection around this wrapper when testing protected flows.
