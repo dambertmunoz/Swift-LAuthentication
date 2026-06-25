@@ -39,3 +39,9 @@ Run the demo app on a physical device for full biometric coverage. Simulator beh
 - Handle unavailable biometry separately from failed authentication.
 - Do not treat biometric success as authorization by itself; pair it with the app's real session/security model.
 - Prefer dependency injection around this wrapper when testing protected flows.
+
+## Author
+
+Dambert Muñoz
+
+Email: [dmsantillana2705@gmail.com](mailto:dmsantillana2705@gmail.com)
